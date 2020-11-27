@@ -2,9 +2,10 @@
   "name": "nodejs-beginner",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "nodemon server.js",
+    "peer": "echo cannot run this 'peerjs --host 0.0.0.0 --port 3001 --path '/''",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -18,7 +19,11 @@
   },
   "homepage": "https://github.com/notepraiya/nodejs-beginner#readme",
   "dependencies": {
+    "ejs": "^3.1.5",
     "express": "^4.17.1",
-    "nodemon": "^2.0.6"
+    "nodemon": "^2.0.6",
+    "peer": "^0.6.0",
+    "socket.io": "^3.0.3",
+    "uuid": "^8.3.1"
   }
 }

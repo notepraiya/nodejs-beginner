@@ -1,12 +1,35 @@
 const express = require('express');
 const app = express();
 const server = require('http').Server(app);
+const io = require('socket.io')(server);
+const { v4: uuidv4 } = require('uuid');
+
+
+app.set('view engine', 'ejs');
+app.use(express.static('public'));
 
 app.get('/', (req, res) => {
-  res.status(200).send('Hello');
+  res.redirect(`/${uuidv4()}`);
 });
 
+app.get('/:room', (req, res) => {
+  res.render('room', { roomId: req.params.room });
+});
 
+io.on('connection', (socket) => {
+  console.log('a user is starting connection');
 
-server.listen(3030);
+  socket.on('join-room', (roomId, userId) => {
+    console.log('userId: ' + userId + ' has joined room: ' + roomId);
+    socket.join(roomId);
+    socket.to(roomId).broadcast.emit('user-connected', userId);
+  });
+
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+
+});
+
+server.listen(3000);
 
